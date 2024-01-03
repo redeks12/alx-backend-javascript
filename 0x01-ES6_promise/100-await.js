@@ -1,4 +1,3 @@
-import { isNull } from "lodash";
 import { uploadPhoto, createUser } from "./utils.js";
 export default async function asyncUploadUser() {
   const photo = await uploadPhoto();
