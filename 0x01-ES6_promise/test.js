@@ -1,3 +1,5 @@
-import handleProfileSignup from "./3-all.js";
+import handleResponseFromAPI from "./2-then.js";
 
-handleProfileSignup();
+const promise = Promise.reject();
+const min = handleResponseFromAPI(promise);
+console.log(min);
