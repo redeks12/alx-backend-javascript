@@ -1,12 +1,7 @@
-import Building from "./5-building.js";
+import EVCar from "./100-evcar.js";
 
-const b = new Building(100);
-console.log(b);
+const ec1 = new EVCar("Tesla", "Turbo", "Red", "250");
+console.log(ec1);
 
-class TestBuilding extends Building {}
-
-try {
-  new TestBuilding(200);
-} catch (err) {
-  console.log(err);
-}
+const ec2 = ec1.cloneCar();
+console.log(ec2);
