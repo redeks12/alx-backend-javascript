@@ -4,8 +4,8 @@ export default function updateUniqueItems(item) {
       if (els[1] === 1) {
         item.set(els[0], 100);
       }
-      return item;
     }
+    return item;
   }
   throw new Error("Cannot process");
 }
