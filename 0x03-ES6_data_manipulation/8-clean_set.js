@@ -1,9 +1,12 @@
 export default function cleanSet(sett, startString) {
-  if (!startString) return "";
+  if (!startString || typeof startString !== "string") return "";
   const arr = [];
   let check = false;
   for (const nm of sett) {
-    if (nm.slice(0, startString.length) === startString) {
+    if (
+      typeof nm === "string" &&
+      nm.slice(0, startString.length) === startString
+    ) {
       arr.push(nm.slice(startString.length));
       check = true;
     }
