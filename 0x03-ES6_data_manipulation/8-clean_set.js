@@ -9,5 +9,5 @@ export default function cleanSet(sett, startString) {
     }
   }
   if (check) return arr.join("-");
-  else return "";
+  else return;
 }
