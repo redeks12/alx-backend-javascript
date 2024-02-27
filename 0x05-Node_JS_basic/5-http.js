@@ -22,7 +22,7 @@ function countStudents(path) {
         dict[x[3]].push(x[0]);
       });
 
-      resolve([dict, val.length]);
+      resolve([dict, val.length - 1]);
     });
   });
 }
@@ -33,11 +33,10 @@ const app = http.createServer((req, res) => {
   if (method === "GET" && url === "/") {
     res.end("Hello Holberton School!");
   } else if (method === "GET" && url === "/students") {
-    res.write("This is the list of our students");
-
     countStudents(process.argv[2])
       .then((resp) => {
         const [x, l] = resp;
+        res.write("This is the list of our students");
         res.write(`\nNumber of students: ${l}`);
         Object.keys(x).forEach((key) => {
           res.write(
