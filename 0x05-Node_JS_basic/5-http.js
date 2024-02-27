@@ -1,56 +1,71 @@
 const http = require("http");
-const fs = require("fs");
-function countStudents(path) {
+const { readFile } = require("fs");
+
+const hostname = "127.0.0.1";
+const port = 1245;
+
+function countStudents(fileName) {
+  const students = {};
+  const fields = {};
+  let length = 0;
   return new Promise((resolve, reject) => {
-    fs.readFile(path, "utf-8", (err, data) => {
+    readFile(fileName, (err, data) => {
       if (err) {
-        throw new Error("Cannot load the database");
+        reject(err);
+      } else {
+        let output = "";
+        const lines = data.toString().split("\n");
+        for (let i = 0; i < lines.length; i += 1) {
+          if (lines[i]) {
+            length += 1;
+            const field = lines[i].toString().split(",");
+            if (Object.prototype.hasOwnProperty.call(students, field[3])) {
+              students[field[3]].push(field[0]);
+            } else {
+              students[field[3]] = [field[0]];
+            }
+            if (Object.prototype.hasOwnProperty.call(fields, field[3])) {
+              fields[field[3]] += 1;
+            } else {
+              fields[field[3]] = 1;
+            }
+          }
+        }
+        const l = length - 1;
+        output += `Number of students: ${l}\n`;
+        for (const [key, value] of Object.entries(fields)) {
+          if (key !== "field") {
+            output += `Number of students in ${key}: ${value}. `;
+            output += `List: ${students[key].join(", ")}\n`;
+          }
+        }
+        resolve(output);
       }
-      const val = data.toString().trim().split("\n");
-      val.shift();
-      const stt = val.map((line) => {
-        return line.trim().split(",");
-      });
-      const dict = {};
-      //   dict["lent"] = val.length;
-
-      const fields = new Set(stt.map((x) => x[3]));
-      for (const field of fields) {
-        dict[field] = [];
-      }
-      stt.forEach((x) => {
-        dict[x[3]].push(x[0]);
-      });
-
-      resolve([dict, val.length - 1]);
     });
   });
 }
 
 const app = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-type": "plain/text" });
-  const { method, url } = req;
-  if (method === "GET" && url === "/") {
-    res.end("Hello Holberton School!");
-  } else if (method === "GET" && url === "/students") {
-    countStudents(process.argv[2])
-      .then((resp) => {
-        const [x, l] = resp;
-        res.write("This is the list of our students");
-        res.write(`\nNumber of students: ${l}`);
-        Object.keys(x).forEach((key) => {
-          res.write(
-            `\nNumber of students in ${key}: ${x[key].length}. List: ${x[key]}`
-          );
-        });
-        res.end();
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/plain");
+  if (req.url === "/") {
+    res.write("Hello Holberton School!");
+    res.end();
+  }
+  if (req.url === "/students") {
+    res.write("This is the list of our students\n");
+    countStudents(process.argv[2].toString())
+      .then((output) => {
+        const outString = output.slice(0, -1);
+        res.end(outString);
       })
-      .catch((err) => {
+      .catch(() => {
         res.statusCode = 404;
         res.end("Cannot load the database");
       });
   }
 });
 
-app.listen(1245);
+app.listen(port, hostname, () => {});
+
 module.exports = app;
