@@ -1,11 +1,7 @@
 const fs = require("fs");
 function countStudents(path) {
-  let data;
   try {
-    data = fs.readFileSync(path, "utf-8");
-  } catch (err) {
-    throw new Error("Cannot load the database");
-  } finally {
+    const data = fs.readFileSync(path, "utf-8");
     const val = data.toString().trim().split("\n");
     val.shift();
     const stt = val.map((line) => {
@@ -24,6 +20,8 @@ function countStudents(path) {
     Object.keys(dict).forEach((key) => {
       console.log(`Number of students in ${key}: ${dict[key].join(", ")}`);
     });
+  } catch (err) {
+    throw new Error("Cannot load the database");
   }
 }
 module.exports = countStudents;
