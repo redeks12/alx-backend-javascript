@@ -18,7 +18,11 @@ function countStudents(path) {
     });
     console.log(`Number of students: ${val.length}`);
     Object.keys(dict).forEach((key) => {
-      console.log(`Number of students in ${key}: ${dict[key].join(", ")}`);
+      console.log(
+        `Number of students in ${key}: ${dict[key].length}. List: ${dict[
+          key
+        ].join(", ")}`
+      );
     });
   } catch (err) {
     throw new Error("Cannot load the database");
