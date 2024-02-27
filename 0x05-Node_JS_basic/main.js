@@ -1,10 +1,10 @@
-const countStudents = require("./3-read_file_async");
+const StudentsController = require("../0x05-Node_JS_basic/full_server/controllers/StudentsController.js");
 
-countStudents("database.csv")
-  .then(() => {
-    console.log("Done!");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-console.log("After!");
+StudentsController.getAllStudents();
+//   .then(() => {
+//     console.log("Done!");
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
+// console.log("After!");
