@@ -1,5 +1,5 @@
 const fs = require("fs");
-module.exports = function countStudents(path) {
+function countStudents(path) {
   let data;
   try {
     data = fs.readFileSync(path, "utf-8");
@@ -25,4 +25,5 @@ module.exports = function countStudents(path) {
       console.log(`Number of students in ${key}: ${dict[key].join(", ")}`);
     });
   }
-};
+}
+module.exports = countStudents;
