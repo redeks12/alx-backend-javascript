@@ -1,7 +1,6 @@
-const chai = require("chai");
 const vl = require("./2-calcul_chai");
 const { describe, it } = require("mocha");
-const expect = chai.expect;
+const expect = require("chai").expect;
 
 describe("main checks", () => {
   describe("checks sum", () => {
