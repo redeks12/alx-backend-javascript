@@ -1,36 +1,28 @@
-const expect = require("chai").expect;
+const vl = require("./2-calcul_chai");
 const { describe, it } = require("mocha");
-const calculateNumber = require("./2-calcul_chai");
+const expect = require("chai").expect;
 
-describe("calculateNumber", function () {
-  describe("SUM", function () {
-    it("checking if numbers round", function () {
-      expect(calculateNumber("SUM", 1, 2)).to.equal(3);
-    });
-    it("checking if numbers round", function () {
-      expect(calculateNumber("SUM", 1.6, 2.6)).to.equal(5);
-    });
-  });
-  describe("SUBTRACT", function () {
-    it("checking if numbers round", function () {
-      expect(calculateNumber("SUBTRACT", 1.4, 2.3)).to.equal(-1);
-    });
-    it("checking if numbers round", function () {
-      expect(calculateNumber("SUBTRACT", 4.9, 2.7)).to.equal(2);
-    });
-    it("checking if numbers round", function () {
-      expect(calculateNumber("SUBTRACT", -4.9, -2.7)).to.equal(-2);
+describe("main checks", () => {
+  describe("checks sum", () => {
+    it("should return rounded", () => {
+      expect(vl("SUM", 0.2, 1.1)).to.equal(1);
+      expect(vl("SUM", 4, 10)).to.equal(14);
+      expect(vl("SUM", 5.3, 3.6)).to.equal(9);
     });
   });
-  describe("DIVIDE", function () {
-    it("checking if numbers round", function () {
-      expect(calculateNumber("DIVIDE", 4, 2)).to.equal(2);
+  describe("checks subtract", () => {
+    it("should return rounded", () => {
+      expect(vl("SUBTRACT", 2, 1.1)).to.equal(1);
+      expect(vl("SUBTRACT", 10, 5)).to.equal(5);
+      expect(vl("SUBTRACT", 5.6, 3.3)).to.equal(3);
     });
-    it("checking if numbers round", function () {
-      expect(calculateNumber("DIVIDE", 4.6, 1.8)).to.equal(2.5);
-    });
-    it("checking if numbers round", function () {
-      expect(calculateNumber("DIVIDE", 4, 0)).to.equal("Error");
+  });
+  describe("checks divide", () => {
+    it("should return rounded", () => {
+      expect(vl("DIVIDE", 10, 2)).to.equal(5);
+      expect(vl("DIVIDE", 10, 5)).to.equal(2);
+      expect(vl("DIVIDE", 20.4, 4.0)).to.equal(5);
+      expect(vl("DIVIDE", 20.6, 0)).to.equal("Error");
     });
   });
 });
