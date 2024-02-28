@@ -4,6 +4,7 @@ class StudentsController {
   static getAllStudents(request, response) {
     readDatabase(process.argv[2].toString())
       .then((x) => {
+        response.setHeader("Content-Type", "plain/text");
         const out = [];
         out.push("This is the list of our students");
         const keys = Object.keys(x);
@@ -23,6 +24,7 @@ class StudentsController {
   static getAllStudentsByMajor(request, response) {
     const major = ["CS", "SWE"];
     const val = request.params.major;
+    response.setHeader("Content-Type", "plain/text");
     if (!major.includes(val)) {
       response.status(500).send("Major parameter must be CS or SWE");
     }
