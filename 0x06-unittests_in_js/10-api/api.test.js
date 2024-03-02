@@ -83,8 +83,14 @@ describe("Test login", () => {
     json: true,
     body: { userName: "nandom" },
   };
+  const options2 = {
+    url: "http://localhost:7865/login",
+    method: "POST",
+    json: true,
+    body: { use: "nandom" },
+  };
 
-  it("should have right status code", () => {
+  it("should have right status code", (done) => {
     request(options, (err, response, body) => {
       if (err) {
         expect(response.statusCode).to.not.equal(200);
@@ -95,10 +101,16 @@ describe("Test login", () => {
     });
   });
 
-  it("should return the corect string", () => {
+  it("should return the corect string", (done) => {
     request(options, (err, response, body) => {
-      expect(body).to.be.a("string");
       expect(body).to.contain("Welcome nandom");
+      done();
+    });
+  });
+
+  it("get 404 error", (done) => {
+    request(options2, (err, res, body) => {
+      expect(res.statusCode).to.equal(404);
       done();
     });
   });
