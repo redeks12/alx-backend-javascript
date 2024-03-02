@@ -31,6 +31,8 @@ describe("Test Cart", () => {
       expect(res.statusCode).to.equal(200);
       done();
     });
+  });
+  it("should have wrong status code", () => {
     request(options2, (err, res, body) => {
       expect(res.statusCode).to.equal(404);
       done();
