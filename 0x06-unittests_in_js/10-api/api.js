@@ -11,6 +11,7 @@ app.get("/cart/:id([0-9]+)", (request, response) => {
 });
 
 app.get("/available_payments", (request, response) => {
+  response.set("Content-Type", "application/json");
   response.json({
     payment_methods: {
       credit_cards: true,
@@ -20,7 +21,12 @@ app.get("/available_payments", (request, response) => {
 });
 
 app.post("/login", (req, res) => {
-  res.send(`Welcome ${req.body.userName}`);
+  const { userName } = req.body;
+  if (userName) {
+    res.send(`Welcome ${userName}`);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.listen(port, () => {

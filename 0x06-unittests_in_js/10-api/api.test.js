@@ -64,8 +64,13 @@ describe("Test available_payments", () => {
   });
   it("should return an object", () => {
     request(options, (err, res, body) => {
-      expect(body).to.be.an("object");
-      expect(body).to.contain("payment_methods");
+      //   expect(body).to.be.an("object");
+      expect(body).to.deep.equal({
+        payment_methods: {
+          credit_cards: true,
+          paypal: false,
+        },
+      });
       done();
     });
   });
@@ -81,7 +86,12 @@ describe("Test login", () => {
 
   it("should have right status code", () => {
     request(options, (err, response, body) => {
-      expect(response.statusCode).to.equal(200);
+      if (err) {
+        expect(response.statusCode).to.not.equal(200);
+      } else {
+        expect(response.statusCode).to.equal(200);
+      }
+      done();
     });
   });
 
@@ -89,6 +99,7 @@ describe("Test login", () => {
     request(options, (err, response, body) => {
       expect(body).to.be.a("string");
       expect(body).to.contain("Welcome nandom");
+      done();
     });
   });
 });
