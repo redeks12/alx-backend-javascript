@@ -19,7 +19,7 @@ describe("testing api request", () => {
 
 describe("Test Cart", () => {
   const options = {
-    url: "http://localhost:7865/cart/12",
+    url: "http://localhost:7865/cart/15",
     method: "GET",
   };
   const options2 = {
@@ -29,6 +29,12 @@ describe("Test Cart", () => {
   it("should have correct statuscodes", () => {
     request(options, (err, res, body) => {
       expect(res.statusCode).to.equal(200);
+      done();
+    });
+  });
+  it("should return a string", () => {
+    request(options, (err, res, body) => {
+      expect(body).to.contain(`Payment methods for cart 15`);
       done();
     });
   });
