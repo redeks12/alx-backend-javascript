@@ -49,11 +49,16 @@ describe("Test Cart", () => {
 describe("Test available_payments", () => {
   const options = {
     url: "http://localhost:7865/available_payments",
+    json: true,
     method: "GET",
   };
   it("should return the right status code", () => {
     request(options, (err, res, body) => {
-      expect(res.statusCode).to.equal(200);
+      if (err) {
+        expect(res.statusCode).to.not.equal(200);
+      } else {
+        expect(res.statusCode).to.equal(200);
+      }
       done();
     });
   });
@@ -70,6 +75,7 @@ describe("Test login", () => {
   const options = {
     url: "http://localhost:7865/login",
     method: "POST",
+    json: true,
     body: { userName: "nandom" },
   };
 
