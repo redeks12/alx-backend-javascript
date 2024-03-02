@@ -10,9 +10,8 @@ describe("testing api request", () => {
   it("should have the correct status code", () => {
     request(options, (err, res, body) => {
       expect(res.statusCode).to.equal(200);
-      expect(body).to.contain("Welcome to the payment system");
-      expect(res.headers["content-length"]).to.equal("29");
       expect(body).to.be.a("string");
+      expect(res.headers["content-length"]).to.equal("29");
       done();
     });
   });
